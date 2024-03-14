@@ -32,7 +32,7 @@ server:
       enabled: false
 
 logging.level.org:
-  springframework.web: INFO
+  springframework.web: DEBUG
   hibernate: ERROR
 
 springdoc:

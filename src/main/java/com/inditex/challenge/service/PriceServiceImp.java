@@ -7,10 +7,14 @@ import com.inditex.challenge.utils.DateUtils;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 @Service
-public class PriceServiceImp implements PriceService{
+public class PriceServiceImp implements PriceService {
 
     private final PriceRepository priceRepository;
 
@@ -21,18 +25,17 @@ public class PriceServiceImp implements PriceService{
     }
 
     @Override
-    public Price getPrice(Product product, String date) {
+    public Price getPriceWithHighestPriority(Product product, String date) throws ParseException {
+        Date dateToFind = dateUtils.stringToDate(date);
         List<Price> prices = priceRepository.findAllByProductId(product);
-        Price result = null;
-        try {
-            for (Price price : prices) {
-                if (dateUtils.stringToDate(date).after(price.getStartDate()) && dateUtils.stringToDate(date).before(price.getEndDate())) {
-                    result = price;
-                }
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return result;
+
+        return prices.stream()
+                .filter(price -> {
+                    Date start = price.getStartDate();
+                    Date end = price.getEndDate();
+                    return start.before(dateToFind) && end.after(dateToFind);
+                })
+                .max(Comparator.comparingInt(Price::getPriority))
+                .orElse(null);
     }
 }

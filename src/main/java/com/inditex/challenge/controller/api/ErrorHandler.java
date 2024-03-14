@@ -36,6 +36,11 @@ public class ErrorHandler implements ErrorController {
                         ResponseConstants.E500.getStatus(),
                         ResponseConstants.E500.getMessage(),
                         HttpStatus.INTERNAL_SERVER_ERROR);
+            } else if (statusCode == HttpStatus.BAD_REQUEST.value()) {
+                resp = ResponseHandler.response(
+                        ResponseConstants.E400.getStatus(),
+                        ResponseConstants.E400.getMessage(),
+                        HttpStatus.BAD_REQUEST);
             } else if (statusCode == HttpStatus.METHOD_NOT_ALLOWED.value()) {
                 resp = ResponseHandler.response(
                         ResponseConstants.E500.getStatus(),

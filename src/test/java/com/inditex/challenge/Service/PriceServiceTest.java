@@ -35,7 +35,7 @@ public class PriceServiceTest {
     DateUtils dateUtils = new DateUtils();
 
     @Test
-    public void testGetPriceWithDate() throws ParseException {
+    public void getPriceWithDateAndHighPriority() throws ParseException {
         Brand brand = new Brand();
         brand.setBrandId(1);
         brand.setBrandName(BrandConstants.ZARA.name());
@@ -54,20 +54,22 @@ public class PriceServiceTest {
         expectedPrice1.setCurrency(Currency.EUR.getValue());
         expectedPrice1.setStartDate(dateUtils.stringToDate("2024-04-13-00.00.00"));
         expectedPrice1.setEndDate(dateUtils.stringToDate("2024-04-13-18.00.00"));
+        expectedPrice1.setPriority(1);
 
         Price expectedPrice2 = new Price();
         expectedPrice2.setPrice(21.50);
         expectedPrice2.setCurrency(Currency.EUR.getValue());
         expectedPrice2.setStartDate(dateUtils.stringToDate("2024-04-14-08.00.00"));
         expectedPrice2.setEndDate(dateUtils.stringToDate("2024-04-14-20.00.00"));
+        expectedPrice2.setPriority(2);
 
         prices.add(expectedPrice1);
         prices.add(expectedPrice2);
 
         when(priceRepository.findAllByProductId(product)).thenReturn(prices);
 
-        // Call to method getPrice() of PriceService with the mocked data
-        Price expectedPrice = priceService.getPrice(product, "2024-04-13-14.00.00");
+        // Call to method getPriceWithHighestPriority() of PriceService with the mocked data
+        Price expectedPrice = priceService.getPriceWithHighestPriority(product, "2024-04-13-10.00.00");
 
         // Assert the result
         assertEquals(expectedPrice.getPrice(), expectedPrice1.getPrice());

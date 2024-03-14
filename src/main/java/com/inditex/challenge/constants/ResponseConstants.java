@@ -12,6 +12,7 @@ public enum ResponseConstants {
     /**
      * Custom error for responses
      */
+    E400("BAD_REQUEST", "The request is not valid. Check the parameters."),
     E404("NOT_FOUND", "This content doesn't exist in this path."),
     E500("GATEWAY_ERROR", "Something was wrong."),
     EF01("NOT_FILE", "Please select a file to upload."),

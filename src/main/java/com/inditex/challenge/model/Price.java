@@ -31,6 +31,14 @@ public class Price {
     @ManyToOne
     @JoinColumn(name = "productId")
     private Product productId;
+
+    public Product getProduct() {
+        return productId;
+    }
+
+    public void setProduct(Product product) {
+        this.productId = product;
+    }
 }
 
 

@@ -26,26 +26,29 @@ public class PriceController {
 
     Logger log = LoggerFactory.getLogger(PriceController.class);
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-    @Autowired
-    private PriceServiceImp priceService;
+    private final PriceServiceImp priceService;
 
     DateUtils dateUtils = new DateUtils();
 
+    public PriceController(ProductRepository productRepository, PriceServiceImp priceService) {
+        this.productRepository = productRepository;
+        this.priceService = priceService;
+    }
+
     @GetMapping("")
-    public ResponseEntity<ResponseDataDTO> getPrice(@PathParam("productId") String productId, @PathParam("date") String date) throws ParseException {
+    public ResponseEntity<ResponseDataDTO> getPrice(@PathParam("productId") Integer productId, @PathParam("date") String date, @PathParam("Brand") Integer brand) throws ParseException {
         log.warn("Looking for the existence of the product with id: " + productId);
-        if (!productRepository.existsById(Integer.parseInt(productId))) {
+        if (!productRepository.existsById(productId)) {
             return ResponseHandler.response(ResponseConstants.E404.getStatus(), "Product with id: " + productId + " does not exist", HttpStatus.NOT_FOUND, null);
         }
 
-        Price resultPrice = priceService.getPrice(productRepository.getReferenceById(Integer.parseInt(productId)), date);
+        Price resultPrice = priceService.getPriceWithHighestPriority(productRepository.getReferenceById(productId), date);
 
         PriceResponseDTO result = new PriceResponseDTO();
-        result.setProductId(resultPrice.getProductId().getProductId());
-        result.setBrandId(resultPrice.getProductId().getBrand().getBrandId());
+        result.setProductId(resultPrice.getProduct().getProductId());
+        result.setBrandId(resultPrice.getProduct().getBrand().getBrandId());
         result.setPrice(resultPrice.getPrice());
         result.setCurrency(resultPrice.getCurrency());
         result.setStartDate(dateUtils.dateToString(resultPrice.getStartDate()));
