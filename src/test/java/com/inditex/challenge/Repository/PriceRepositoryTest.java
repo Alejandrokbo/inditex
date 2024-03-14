@@ -4,12 +4,12 @@ import com.inditex.challenge.constants.Currency;
 import com.inditex.challenge.model.Brand;
 import com.inditex.challenge.model.Price;
 import com.inditex.challenge.model.Product;
-import com.inditex.challenge.repository.PriceRepository;
 import com.inditex.challenge.repository.ProductRepository;
 import com.inditex.challenge.utils.DateUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -19,13 +19,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
+@TestPropertySource(properties = "spring.sql.init.data-locations=classpath:/no-data.sql")
 public class PriceRepositoryTest {
 
     @Autowired
     private ProductRepository productRepository;
-
-    @Autowired
-    private PriceRepository priceRepository;
 
     DateUtils dateUtils = new DateUtils();
 

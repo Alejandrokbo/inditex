@@ -5,20 +5,23 @@ import com.inditex.challenge.repository.BrandRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
+@TestPropertySource(properties = "spring.sql.init.data-locations=classpath:/no-data.sql")
 public class BrandRepositoryTest {
 
     @Autowired
     private BrandRepository brandRepository;
 
     @Test
-    public void testGetBrand() {
+    public void testCreateBrand() {
         Brand brand = new Brand();
-        brand.setBrandName("ZARA");
+        brand.setBrandId(0);
+        brand.setBrandName("PEPE");
 
         Brand brand1 = new Brand();
         brand1.setBrandName("Patricia");

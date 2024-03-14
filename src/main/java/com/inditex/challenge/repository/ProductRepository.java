@@ -5,4 +5,6 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
+
+    boolean existsByProductIdAndBrandBrandId(@NotNull Integer productId, @NotNull Integer brandId);
 }

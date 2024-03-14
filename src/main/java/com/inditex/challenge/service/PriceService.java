@@ -4,7 +4,6 @@ import com.inditex.challenge.model.Price;
 import com.inditex.challenge.model.Product;
 
 import java.text.ParseException;
-import java.util.List;
 
 public interface PriceService {
 
