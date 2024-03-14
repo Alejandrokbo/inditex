@@ -1,7 +1,15 @@
 ## EJERCICIO TÉCNICO PARA DESARROLLADOR BAKCEND GRUPO INDITEX
 -------------------
+### Requisitos
+- Java 17
+- Maven 3.8.1
+- Ejecutar el comando `mvn clean install` para compilar el proyecto e instalar las dependencias
+
+
+## EJERCICIO
 
 En la base de datos de comercio electrónico de la compañía disponemos de la tabla PRICES que refleja el precio final (pvp) y la tarifa que aplica a un producto de una cadena entre unas fechas determinadas. A continuación se muestra un ejemplo de la tabla con los campos relevantes:
+---------------------------------------------------------------------------------------------------------------------
 
 PRICES
 -------
