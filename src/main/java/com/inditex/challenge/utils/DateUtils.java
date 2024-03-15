@@ -6,19 +6,18 @@ import java.util.Date;
 
 public class DateUtils {
 
-    public Date stringToDate(String date) throws ParseException {
+    public static Date stringToDate(String date) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss");
-        java.util.Date dateFormated = null;
-        Date sqlDate;
+        java.util.Date dateFormatted;
         try {
-            dateFormated = formatter.parse(date);
+            dateFormatted = formatter.parse(date);
         } catch (Exception e) {
             throw new ParseException("Invalid date format", 0);
         }
-        return dateFormated;
+        return dateFormatted;
     }
 
-    public String dateToString(Date date) {
+    public static String dateToString(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss");
         return formatter.format(date);
     }

@@ -7,7 +7,6 @@ import com.inditex.challenge.dto.ResponseDataDTO;
 import com.inditex.challenge.model.Price;
 import com.inditex.challenge.repository.ProductRepository;
 import com.inditex.challenge.service.PriceServiceImp;
-import com.inditex.challenge.utils.DateUtils;
 import jakarta.websocket.server.PathParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.text.ParseException;
 
+import static com.inditex.challenge.utils.DateUtils.dateToString;
+
 @Controller
 @RequestMapping("/price")
 public class PriceController {
@@ -29,8 +30,6 @@ public class PriceController {
 
     private final PriceServiceImp priceService;
 
-    DateUtils dateUtils = new DateUtils();
-
     public PriceController(ProductRepository productRepository, PriceServiceImp priceService) {
         this.productRepository = productRepository;
         this.priceService = priceService;
@@ -39,7 +38,7 @@ public class PriceController {
     @GetMapping("")
     public ResponseEntity<ResponseDataDTO> getPrice(@PathParam("productId") Integer productId, @PathParam("date") String date, @PathParam("Brand") Integer brand) throws ParseException {
         log.warn("Looking for the existence of the product with id: " + productId);
-        if (!productRepository.existsByProductIdAndBrandBrandId(productId, brand) ) {
+        if (!productRepository.existsByProductIdAndBrandBrandId(productId, brand)) {
             return ResponseHandler.response(ResponseConstants.E404.getStatus(), "Product with id: " + productId + " does not exist", HttpStatus.NOT_FOUND, null);
         }
 
@@ -50,8 +49,8 @@ public class PriceController {
         result.setBrandId(resultPrice.getProduct().getBrand().getBrandId());
         result.setPrice(resultPrice.getPrice());
         result.setCurrency(resultPrice.getCurrency());
-        result.setStartDate(dateUtils.dateToString(resultPrice.getStartDate()));
-        result.setEndDate(dateUtils.dateToString(resultPrice.getEndDate()));
+        result.setStartDate(dateToString(resultPrice.getStartDate()));
+        result.setEndDate(dateToString(resultPrice.getEndDate()));
 
         return ResponseHandler.response(ResponseConstants.OK.getStatus(), "Price for product", HttpStatus.OK, result);
     }

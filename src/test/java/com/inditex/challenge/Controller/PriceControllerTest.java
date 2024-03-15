@@ -25,7 +25,9 @@ public class PriceControllerTest {
         assertThat(priceController).isNotNull();
     }
 
-    // Test 1: petición a las 10:00 del día 14 del producto 35455   para la brand 1 (ZARA)
+    /**
+     * @Test 1: petición a las 10:00 del día 14 del producto 35455   para la brand 1 (ZARA)
+     */
     @Test
     void givenTime_10_date_14_andBrand_1_thenResultIsPrice1() throws ParseException {
         ResponseEntity<ResponseDataDTO> result = priceController.getPrice(35455, "2020-06-14-10.00.00", 1);

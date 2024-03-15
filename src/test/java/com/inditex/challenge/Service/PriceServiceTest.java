@@ -7,19 +7,16 @@ import com.inditex.challenge.model.Price;
 import com.inditex.challenge.model.Product;
 import com.inditex.challenge.repository.PriceRepository;
 import com.inditex.challenge.service.PriceServiceImp;
-import com.inditex.challenge.utils.DateUtils;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
-
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import static com.inditex.challenge.utils.DateUtils.stringToDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -31,8 +28,6 @@ public class PriceServiceTest {
 
     @InjectMocks
     private PriceServiceImp priceService;
-
-    DateUtils dateUtils = new DateUtils();
 
     @Test
     public void getPriceWithDateAndHighPriority() throws ParseException {
@@ -46,21 +41,21 @@ public class PriceServiceTest {
         product.setBrand(brand);
 
         // Creating a list of Price objects
-        List<Price> prices = new ArrayList<Price>();
+        List<Price> prices = new ArrayList<>();
 
         // Creating a Price test object
         Price expectedPrice1 = new Price();
         expectedPrice1.setPrice(20.50);
         expectedPrice1.setCurrency(Currency.EUR.getValue());
-        expectedPrice1.setStartDate(dateUtils.stringToDate("2024-04-13-00.00.00"));
-        expectedPrice1.setEndDate(dateUtils.stringToDate("2024-04-13-18.00.00"));
+        expectedPrice1.setStartDate(stringToDate("2024-04-13-00.00.00"));
+        expectedPrice1.setEndDate(stringToDate("2024-04-13-18.00.00"));
         expectedPrice1.setPriority(1);
 
         Price expectedPrice2 = new Price();
         expectedPrice2.setPrice(21.50);
         expectedPrice2.setCurrency(Currency.EUR.getValue());
-        expectedPrice2.setStartDate(dateUtils.stringToDate("2024-04-14-08.00.00"));
-        expectedPrice2.setEndDate(dateUtils.stringToDate("2024-04-14-20.00.00"));
+        expectedPrice2.setStartDate(stringToDate("2024-04-14-08.00.00"));
+        expectedPrice2.setEndDate(stringToDate("2024-04-14-20.00.00"));
         expectedPrice2.setPriority(2);
 
         prices.add(expectedPrice1);
@@ -75,7 +70,6 @@ public class PriceServiceTest {
         assertEquals(expectedPrice.getPrice(), expectedPrice1.getPrice());
         assertEquals(expectedPrice.getCurrency(), expectedPrice1.getCurrency());
     }
-
 
 
 }
