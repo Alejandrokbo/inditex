@@ -5,8 +5,8 @@ import com.inditex.challenge.controller.api.ResponseHandler;
 import com.inditex.challenge.dto.PriceResponseDTO;
 import com.inditex.challenge.dto.ResponseDataDTO;
 import com.inditex.challenge.model.Price;
-import com.inditex.challenge.repository.ProductRepository;
 import com.inditex.challenge.service.PriceServiceImp;
+import com.inditex.challenge.service.ProductServiceImp;
 import jakarta.websocket.server.PathParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,23 +26,22 @@ public class PriceController {
 
     Logger log = LoggerFactory.getLogger(PriceController.class);
 
-    private final ProductRepository productRepository;
-
     private final PriceServiceImp priceService;
+    private final ProductServiceImp productService;
 
-    public PriceController(ProductRepository productRepository, PriceServiceImp priceService) {
-        this.productRepository = productRepository;
+    public PriceController(PriceServiceImp priceService, ProductServiceImp productService) {
+        this.productService = productService;
         this.priceService = priceService;
     }
 
     @GetMapping("")
     public ResponseEntity<ResponseDataDTO> getPrice(@PathParam("productId") Integer productId, @PathParam("date") String date, @PathParam("Brand") Integer brand) throws ParseException {
         log.warn("Looking for the existence of the product with id: " + productId);
-        if (!productRepository.existsByProductIdAndBrandBrandId(productId, brand)) {
+        if (!productService.existsByProductIdAndBrandBrandId(productId, brand)) {
             return ResponseHandler.response(ResponseConstants.E404.getStatus(), "Product with id: " + productId + " does not exist", HttpStatus.NOT_FOUND, null);
         }
 
-        Price resultPrice = priceService.getPriceWithHighestPriority(productRepository.getReferenceById(productId), date);
+        Price resultPrice = priceService.getPriceWithHighestPriority(productId, date);
 
         PriceResponseDTO result = new PriceResponseDTO();
         result.setProductId(resultPrice.getProduct().getProductId());

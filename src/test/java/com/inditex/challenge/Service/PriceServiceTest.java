@@ -6,6 +6,7 @@ import com.inditex.challenge.model.Brand;
 import com.inditex.challenge.model.Price;
 import com.inditex.challenge.model.Product;
 import com.inditex.challenge.repository.PriceRepository;
+import com.inditex.challenge.repository.ProductRepository;
 import com.inditex.challenge.service.PriceServiceImp;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,6 +26,9 @@ import static org.mockito.Mockito.when;
 public class PriceServiceTest {
     @Mock
     private PriceRepository priceRepository;
+
+    @Mock
+    private ProductRepository productRepository;
 
     @InjectMocks
     private PriceServiceImp priceService;
@@ -51,24 +55,28 @@ public class PriceServiceTest {
         expectedPrice1.setEndDate(stringToDate("2024-04-13-18.00.00"));
         expectedPrice1.setPriority(1);
 
-        Price expectedPrice2 = new Price();
-        expectedPrice2.setPrice(21.50);
-        expectedPrice2.setCurrency(Currency.EUR.getValue());
-        expectedPrice2.setStartDate(stringToDate("2024-04-14-08.00.00"));
-        expectedPrice2.setEndDate(stringToDate("2024-04-14-20.00.00"));
-        expectedPrice2.setPriority(2);
+        Price expectedPriceCorrect = new Price();
+        expectedPriceCorrect.setPrice(21.50);
+        expectedPriceCorrect.setCurrency(Currency.EUR.getValue());
+        expectedPriceCorrect.setStartDate(stringToDate("2024-04-14-08.00.00"));
+        expectedPriceCorrect.setEndDate(stringToDate("2024-04-14-20.00.00"));
+        expectedPriceCorrect.setPriority(2);
 
         prices.add(expectedPrice1);
-        prices.add(expectedPrice2);
+        prices.add(expectedPriceCorrect);
+        product.setPrices(prices);
 
-        when(priceRepository.findAllByProductId(product)).thenReturn(prices);
+        String dateToFind = "2024-04-13-10.00.00";
+
+        when(productRepository.getReferenceById(product.getProductId())).thenReturn(product);
+        when(priceRepository.findByDateInRange(stringToDate(dateToFind), product)).thenReturn(prices);
 
         // Call to method getPriceWithHighestPriority() of PriceService with the mocked data
-        Price expectedPrice = priceService.getPriceWithHighestPriority(product, "2024-04-13-10.00.00");
+        Price expectedPrice = priceService.getPriceWithHighestPriority(product.getProductId(), dateToFind);
 
         // Assert the result
-        assertEquals(expectedPrice.getPrice(), expectedPrice1.getPrice());
-        assertEquals(expectedPrice.getCurrency(), expectedPrice1.getCurrency());
+        assertEquals(expectedPrice.getPrice(), expectedPriceCorrect.getPrice());
+        assertEquals(expectedPrice.getCurrency(), expectedPriceCorrect.getCurrency());
     }
 
 
