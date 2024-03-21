@@ -1,5 +1,6 @@
 package com.inditex.challenge.controller.api;
 
+import com.inditex.challenge.constants.ResponseConstants;
 import com.inditex.challenge.dto.ResponseDTO;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -9,6 +10,16 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 public class ResponseHandler {
+
+    @NotNull
+    @Contract("_, -> new")
+    public static ResponseEntity<ResponseDTO> response(Object data) {
+        var resp = new ResponseDTO();
+        resp.message = ResponseConstants.OK.getMessage();
+        resp.statusMessage = ResponseConstants.OK.getStatus();
+        resp.data = data;
+        return new ResponseEntity<>(resp, defaultHeaders(), HttpStatus.OK);
+    }
 
     @NotNull
     @Contract("_, _, _, -> new")

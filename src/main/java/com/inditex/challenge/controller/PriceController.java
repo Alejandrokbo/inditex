@@ -38,7 +38,7 @@ public class PriceController {
     public ResponseEntity<ResponseDTO> getPrice(@PathParam("productId") Integer productId, @PathParam("date") String date, @PathParam("Brand") Integer brand) throws ParseException {
         log.warn("Looking for the existence of the product with id: " + productId);
         if (!productService.existsByProductIdAndBrandBrandId(productId, brand)) {
-            return ResponseHandler.response(ResponseConstants.E404.getStatus(), "Product with id: " + productId + " does not exist", HttpStatus.NOT_FOUND, null);
+            return ResponseHandler.response(ResponseConstants.E404.getStatus(), "Product with id: " + productId + " does not exist", HttpStatus.NOT_FOUND);
         }
 
         Price resultPrice = priceService.getPriceWithHighestPriority(productId, date);
@@ -51,7 +51,7 @@ public class PriceController {
         result.setStartDate(dateToString(resultPrice.getStartDate()));
         result.setEndDate(dateToString(resultPrice.getEndDate()));
 
-        return ResponseHandler.response(ResponseConstants.OK.getStatus(), "Price for product", HttpStatus.OK, result);
+        return ResponseHandler.response(ResponseConstants.OK.getStatus(), "Price for product: " + productId, HttpStatus.OK, result);
     }
 
 }
