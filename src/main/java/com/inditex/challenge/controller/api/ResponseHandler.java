@@ -1,7 +1,6 @@
 package com.inditex.challenge.controller.api;
 
-import com.inditex.challenge.dto.ResponseDataDTO;
-import com.inditex.challenge.dto.ResponseMessageDTO;
+import com.inditex.challenge.dto.ResponseDTO;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpHeaders;
@@ -12,18 +11,18 @@ import org.springframework.http.ResponseEntity;
 public class ResponseHandler {
 
     @NotNull
-    @Contract("_, _, _ -> new")
-    public static ResponseEntity<ResponseMessageDTO> response(String statusMessage, String message, HttpStatus status) {
-        var resp = new ResponseMessageDTO();
-        resp.statusMessage = statusMessage;
+    @Contract("_, _, _, -> new")
+    public static ResponseEntity<ResponseDTO> response(String statusMessage, String message, HttpStatus status) {
+        var resp = new ResponseDTO();
         resp.message = message;
+        resp.statusMessage = statusMessage;
         return new ResponseEntity<>(resp, defaultHeaders(), status);
     }
 
     @NotNull
     @Contract("_, _, _, _ -> new")
-    public static ResponseEntity<ResponseDataDTO> response(String statusMessage, String message, HttpStatus status, Object responseObj) {
-        var resp = new ResponseDataDTO();
+    public static ResponseEntity<ResponseDTO> response(String statusMessage, String message, HttpStatus status, Object responseObj) {
+        var resp = new ResponseDTO();
         resp.data = responseObj;
         resp.message = message;
         resp.statusMessage = statusMessage;

@@ -2,7 +2,7 @@ package com.inditex.challenge.Controller;
 
 import com.inditex.challenge.controller.PriceController;
 import com.inditex.challenge.dto.PriceResponseDTO;
-import com.inditex.challenge.dto.ResponseDataDTO;
+import com.inditex.challenge.dto.ResponseDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,12 +10,15 @@ import org.springframework.http.ResponseEntity;
 
 import java.text.ParseException;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PriceControllerTest {
+
+    Logger logger = Logger.getLogger(PriceControllerTest.class.getName());
 
     @Autowired
     private PriceController priceController;
@@ -30,8 +33,10 @@ public class PriceControllerTest {
      */
     @Test
     void givenTime_10_date_14_andBrand_1_thenResultIsPrice1() throws ParseException {
-        ResponseEntity<ResponseDataDTO> result = priceController.getPrice(35455, "2020-06-14-10.00.00", 1);
+        ResponseEntity<ResponseDTO> result = priceController.getPrice(35455, "2020-06-14-10.00.00", 1);
         assertThat(result).isNotNull();
+
+        logger.info("Response: " + result.toString());
 
         PriceResponseDTO price = (PriceResponseDTO) Objects.requireNonNull(result.getBody()).data;
         assertEquals(35.50, price.getPrice());
@@ -42,8 +47,11 @@ public class PriceControllerTest {
      */
     @Test
     void givenTime_16_date_14_andBrand_1_thenResultIsPrice2() throws ParseException {
-        ResponseEntity<ResponseDataDTO> result = priceController.getPrice(35455, "2020-06-14-16.00.00", 1);
+        ResponseEntity<ResponseDTO> result = priceController.getPrice(35455, "2020-06-14-16.00.00", 1);
         assertThat(result).isNotNull();
+
+        logger.info("Response: " + result.toString());
+
 
         PriceResponseDTO price = (PriceResponseDTO) Objects.requireNonNull(result.getBody()).data;
         assertEquals(25.45, price.getPrice());
@@ -54,8 +62,10 @@ public class PriceControllerTest {
      */
     @Test
     void givenTime_21_date_14_andBrand_1_thenResultIsPrice1() throws ParseException {
-        ResponseEntity<ResponseDataDTO> result = priceController.getPrice(35455, "2020-06-14-21.00.00", 1);
+        ResponseEntity<ResponseDTO> result = priceController.getPrice(35455, "2020-06-14-21.00.00", 1);
         assertThat(result).isNotNull();
+
+        logger.info("Response: " + result.toString());
 
         PriceResponseDTO price = (PriceResponseDTO) Objects.requireNonNull(result.getBody()).data;
         assertEquals(35.50, price.getPrice());
@@ -66,8 +76,10 @@ public class PriceControllerTest {
      */
     @Test
     void givenTime_10_date_15_andBrand_1_thenResultIsPrice3() throws ParseException {
-        ResponseEntity<ResponseDataDTO> result = priceController.getPrice(35455, "2020-06-15-10.00.00", 1);
+        ResponseEntity<ResponseDTO> result = priceController.getPrice(35455, "2020-06-15-10.00.00", 1);
         assertThat(result).isNotNull();
+
+        logger.info("Response: " + result.toString());
 
         PriceResponseDTO price = (PriceResponseDTO) Objects.requireNonNull(result.getBody()).data;
         assertEquals(30.50, price.getPrice());
@@ -78,8 +90,10 @@ public class PriceControllerTest {
      */
     @Test
     void givenTime_21_date_16_andBrand_1_thenResultIsPrice2() throws ParseException {
-        ResponseEntity<ResponseDataDTO> result = priceController.getPrice(35455, "2020-06-15-21.00.00", 1);
+        ResponseEntity<ResponseDTO> result = priceController.getPrice(35455, "2020-06-15-21.00.00", 1);
         assertThat(result).isNotNull();
+
+        logger.info("Response: " + result.toString());
 
         PriceResponseDTO price = (PriceResponseDTO) Objects.requireNonNull(result.getBody()).data;
         assertEquals(38.95, price.getPrice());

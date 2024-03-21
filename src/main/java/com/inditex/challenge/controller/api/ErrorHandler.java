@@ -2,7 +2,7 @@ package com.inditex.challenge.controller.api;
 
 
 import com.inditex.challenge.constants.ResponseConstants;
-import com.inditex.challenge.dto.ResponseMessageDTO;
+import com.inditex.challenge.dto.ResponseDTO;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import org.jetbrains.annotations.NotNull;
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ErrorHandler implements ErrorController {
 
     @RequestMapping("/error")
-    public ResponseEntity<ResponseMessageDTO> handleError(HttpServletRequest request) {
+    public ResponseEntity<ResponseDTO> handleError(HttpServletRequest request) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-        @NotNull ResponseEntity<ResponseMessageDTO> resp = ResponseHandler.response(
+        @NotNull ResponseEntity<ResponseDTO> resp = ResponseHandler.response(
                 ResponseConstants.OK.getStatus(),
                 ResponseConstants.OK.getMessage(),
                 HttpStatus.OK

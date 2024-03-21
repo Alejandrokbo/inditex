@@ -2,7 +2,7 @@ package com.inditex.challenge.controller.api;
 
 
 import com.inditex.challenge.constants.ResponseConstants;
-import com.inditex.challenge.dto.ResponseMessageDTO;
+import com.inditex.challenge.dto.ResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ServerStatus {
     @ResponseBody
     @GetMapping("")
-    public ResponseEntity<ResponseMessageDTO> hello() {
+    public ResponseEntity<ResponseDTO> hello() {
         return ResponseHandler.response(
                 ResponseConstants.OK.getStatus(),
                 ResponseConstants.OK.getMessage(),

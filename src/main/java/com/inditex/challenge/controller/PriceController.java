@@ -3,7 +3,7 @@ package com.inditex.challenge.controller;
 import com.inditex.challenge.constants.ResponseConstants;
 import com.inditex.challenge.controller.api.ResponseHandler;
 import com.inditex.challenge.dto.PriceResponseDTO;
-import com.inditex.challenge.dto.ResponseDataDTO;
+import com.inditex.challenge.dto.ResponseDTO;
 import com.inditex.challenge.model.Price;
 import com.inditex.challenge.service.PriceServiceImp;
 import com.inditex.challenge.service.ProductServiceImp;
@@ -35,7 +35,7 @@ public class PriceController {
     }
 
     @GetMapping("")
-    public ResponseEntity<ResponseDataDTO> getPrice(@PathParam("productId") Integer productId, @PathParam("date") String date, @PathParam("Brand") Integer brand) throws ParseException {
+    public ResponseEntity<ResponseDTO> getPrice(@PathParam("productId") Integer productId, @PathParam("date") String date, @PathParam("Brand") Integer brand) throws ParseException {
         log.warn("Looking for the existence of the product with id: " + productId);
         if (!productService.existsByProductIdAndBrandBrandId(productId, brand)) {
             return ResponseHandler.response(ResponseConstants.E404.getStatus(), "Product with id: " + productId + " does not exist", HttpStatus.NOT_FOUND, null);
