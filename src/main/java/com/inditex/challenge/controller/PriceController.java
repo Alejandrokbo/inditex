@@ -7,13 +7,13 @@ import com.inditex.challenge.dto.ResponseDTO;
 import com.inditex.challenge.model.Price;
 import com.inditex.challenge.service.PriceServiceImp;
 import com.inditex.challenge.service.ProductServiceImp;
-import jakarta.websocket.server.PathParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.text.ParseException;
@@ -34,8 +34,8 @@ public class PriceController {
         this.priceService = priceService;
     }
 
-    @GetMapping("")
-    public ResponseEntity<ResponseDTO> getPrice(@PathParam("productId") Integer productId, @PathParam("date") String date, @PathParam("Brand") Integer brand) throws ParseException {
+    @GetMapping("/{productId}/{date}/{brand}")
+    public ResponseEntity<ResponseDTO> getPrice(@PathVariable("productId") Integer productId, @PathVariable("date") String date, @PathVariable("brand") Integer brand) throws ParseException {
         log.warn("Looking for the existence of the product with id: " + productId);
         if (!productService.existsByProductIdAndBrandBrandId(productId, brand)) {
             return ResponseHandler.response(ResponseConstants.E404.getStatus(), "Product with id: " + productId + " does not exist", HttpStatus.NOT_FOUND);
