@@ -1,12 +1,16 @@
 package com.inditex.challenge.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Brand {
 
     @Id
@@ -15,7 +19,7 @@ public class Brand {
 
     private String brandName;
 
-    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.MERGE)
     private List<Product> products;
 
 }

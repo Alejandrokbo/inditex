@@ -5,7 +5,6 @@ import com.inditex.challenge.constants.Currency;
 import com.inditex.challenge.model.Brand;
 import com.inditex.challenge.model.Price;
 import com.inditex.challenge.model.Product;
-import com.inditex.challenge.repository.PriceRepository;
 import com.inditex.challenge.repository.ProductRepository;
 import com.inditex.challenge.service.PriceServiceImp;
 import org.junit.jupiter.api.Test;
@@ -24,8 +23,6 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class PriceServiceTest {
-    @Mock
-    private PriceRepository priceRepository;
 
     @Mock
     private ProductRepository productRepository;
@@ -67,10 +64,8 @@ public class PriceServiceTest {
         product.setPrices(prices);
 
         String dateToFind = "2024-04-13-10.00.00";
-
-        when(productRepository.getReferenceById(product.getProductId())).thenReturn(product);
-        when(priceRepository.findByDateInRange(stringToDate(dateToFind), product)).thenReturn(prices);
-
+        when(productRepository.findByDateInRange(stringToDate(dateToFind), product)).thenReturn(prices);
+        when(productRepository.getReferenceById(35455)).thenReturn(product);
         // Call to method getPriceWithHighestPriority() of PriceService with the mocked data
         Price expectedPrice = priceService.getPriceWithHighestPriority(product.getProductId(), dateToFind);
 
