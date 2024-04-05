@@ -7,20 +7,24 @@ import com.inditex.challenge.dto.ResponseDTO;
 import com.inditex.challenge.model.Price;
 import com.inditex.challenge.service.PriceServiceImp;
 import com.inditex.challenge.service.ProductServiceImp;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
 
 import static com.inditex.challenge.utils.DateUtils.dateToString;
 
-@Controller
+@Tag(name = "PRICE", description = "Operations related to prices")
+@RestController
 @RequestMapping("/price")
 public class PriceController {
 
@@ -34,6 +38,12 @@ public class PriceController {
         this.priceService = priceService;
     }
 
+    @Operation(summary = "Get a price.",
+            description = "Get the price of a product given a date and a brand",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Price found"),
+                    @ApiResponse(responseCode = "404", description = "Price not found"),
+            })
     @GetMapping("/{productId}/{date}/{brand}")
     public ResponseEntity<ResponseDTO> getPrice(@PathVariable("productId") Integer productId, @PathVariable("date") String date, @PathVariable("brand") Integer brand) throws ParseException {
         log.warn("Looking for the existence of the product with id: " + productId);
