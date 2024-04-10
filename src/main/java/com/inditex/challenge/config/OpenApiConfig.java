@@ -1,6 +1,9 @@
 package com.inditex.challenge.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.License;
+import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -10,17 +13,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
                 title = "API DOCUMENTATION FOR INDITEX  CHALLENGE",
                 version = "1.0",
                 description = "This API exposes endpoints to manage prices for E-Commerce.",
-                contact = @io.swagger.v3.oas.annotations.info.Contact(
+                contact = @Contact(
                         name = "Alejandro Cabo",
                         email = "alejandro.cabo1991@gmail.com",
                         url = "https://www.linkedin.com/in/alejandrokbo/"),
-                license = @io.swagger.v3.oas.annotations.info.License(
+                license = @License(
                         name = "MIT License",
                         url = "https://choosealicense.com/licenses/mit/"),
                 termsOfService = "https://github.com/springdoc/springdoc-openapi-maven-plugin/blob/master/LICENSE"
         ),
         servers = {
-                @io.swagger.v3.oas.annotations.servers.Server(
+                @Server(
                         url = "${inditex.openapi.dev-url}",
                         description = "Server URL in Development environment"
                 )
