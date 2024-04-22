@@ -1,5 +1,6 @@
 package com.inditex.challenge.service;
 
+import com.inditex.challenge.exceptions.PriceNotFoundException;
 import com.inditex.challenge.model.Price;
 import com.inditex.challenge.model.Product;
 import com.inditex.challenge.repository.ProductRepository;
@@ -20,13 +21,13 @@ public class PriceServiceImp implements PriceService {
     private ProductRepository productRepository;
 
     @Override
-    public Price getPriceWithHighestPriority(Integer productId, String date) throws ParseException {
+    public Price getPriceWithHighestPriority(Integer productId, String date) throws ParseException, PriceNotFoundException {
         Product product = productRepository.getReferenceById(productId);
         Date dateToFind = stringToDate(date);
         List<Price> prices = productRepository.findByDateInRange(dateToFind, product);
 
         return prices.stream()
                 .max(Comparator.comparingInt(Price::getPriority))
-                .orElse(null);
+                .orElseThrow(PriceNotFoundException::new);
     }
 }

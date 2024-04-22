@@ -14,7 +14,9 @@ public enum ResponseConstants {
      */
     E400("BAD_REQUEST", "The request is not valid. Check the parameters."),
     E404("NOT_FOUND", "This content doesn't exist in this path."),
-    E500("GATEWAY_ERROR", "Something was wrong.");
+    E500("GATEWAY_ERROR", "Something was wrong."),
+
+    PRICE_NOT_FOUND("ERROR", "Price not found for this product.");
 
     private final String status;
     private final String message;
