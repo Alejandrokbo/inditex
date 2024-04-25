@@ -2,6 +2,7 @@ package com.inditex.challenge.Service;
 
 import com.inditex.challenge.constants.BrandConstants;
 import com.inditex.challenge.constants.Currency;
+import com.inditex.challenge.dto.PriceResponseDTO;
 import com.inditex.challenge.exceptions.PriceNotFoundException;
 import com.inditex.challenge.model.Brand;
 import com.inditex.challenge.model.Price;
@@ -11,12 +12,15 @@ import com.inditex.challenge.service.PriceServiceImp;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.inditex.challenge.utils.DateUtils.dateToString;
 import static com.inditex.challenge.utils.DateUtils.stringToDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

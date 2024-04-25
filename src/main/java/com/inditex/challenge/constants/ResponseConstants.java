@@ -16,7 +16,8 @@ public enum ResponseConstants {
     E404("NOT_FOUND", "This content doesn't exist in this path."),
     E500("GATEWAY_ERROR", "Something was wrong."),
 
-    PRICE_NOT_FOUND("ERROR", "Price not found for this product.");
+    PRICE_NOT_FOUND("ERROR", "Price not found for this product."),
+    PRODUCT_NOT_FOUND("ERROR", "Product provided not found for this product.");
 
     private final String status;
     private final String message;

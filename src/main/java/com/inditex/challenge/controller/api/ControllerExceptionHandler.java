@@ -3,6 +3,7 @@ package com.inditex.challenge.controller.api;
 import com.inditex.challenge.dto.ResponseDTO;
 import com.inditex.challenge.exceptions.PriceNotFoundException;
 import com.inditex.challenge.constants.ResponseConstants;
+import com.inditex.challenge.exceptions.ProductNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,16 @@ public class ControllerExceptionHandler {
         return ResponseHandler.response(
                 ResponseConstants.PRICE_NOT_FOUND.getStatus(),
                 ResponseConstants.PRICE_NOT_FOUND.getMessage(),
+                HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ResponseDTO> handleWalletNotFoundException(ProductNotFoundException e) {
+        log.error("Product not found: Reason: {}", e.getMessage());
+        return ResponseHandler.response(
+                ResponseConstants.PRODUCT_NOT_FOUND.getStatus(),
+                ResponseConstants.PRODUCT_NOT_FOUND.getMessage(),
                 HttpStatus.NOT_FOUND);
     }
 
